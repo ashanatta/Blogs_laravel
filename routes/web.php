@@ -5,6 +5,7 @@ use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Yajra\DataTables\Facades\DataTables;
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,11 +45,10 @@ Route::get('/admin/users-data', function () {
     })->name('admin.itemlisting');
 
 Route::get('/admin/item-data', function () {
-    return response()->json([
-        'data' => Item::select('id', 'name')->get()
-    ]);
-
-});
+    return DataTables::of(Item::select('id', 'name'))
+        ->addIndexColumn() 
+        ->make(true);
+})->name('admin.items.data');
 
 });
 

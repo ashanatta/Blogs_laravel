@@ -9,10 +9,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <table id="itemTable" class="stripe hover w-full text-sm text-left">
+                    <table id="itemTable" class="min-w-full divide-y divide-gray-200 text-sm">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2">Name</th>
+                                <th>#ID</th>
+                                <th>Name</th>
                             </tr>
                         </thead>
                     </table>
@@ -21,33 +22,26 @@
         </div>
     </div>
 
+   
+<script>
+$('#itemTable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: '{{ route("admin.items.data") }}',
+    columns: [
+        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+        { data: 'name', name: 'name', orderable: true, }
+    ],
+    dom: 'lfrtip',
+    language: {
+        lengthMenu: 'Show _MENU_ entries',
+        search: 'Search:',
+    },
+    classes: {
+        sLength: 'form-select block w-full mt-1', // for dropdown
+    }
+});
 
-    <script>
-        $(document).ready(function () {
-            $('#itemTable').DataTable({
-                processing: true,
-                serverSide: false,
-                ajax: {
-                    url: '/admin/item-data',
-                    error: function (xhr, error, thrown) {
-                        console.log("AJAX Error: ", xhr.responseText);
-                        alert("Failed to load user data. Check console for details.");
-                    }
-                },
-                columns: [
-                    { data: 'name', name: 'name' },
-                ],
-                language: {
-                    search: "Search:",
-                    lengthMenu: "Show _MENU_ entries",
-                    info: "Showing _START_ to _END_ of _TOTAL_ users",
-                    paginate: {
-                        next: "Next",
-                        previous: "Previous"
-                    }
-                },
-                pageLength: 10,
-            });
-        });
-    </script>
+</script>
+
 </x-app-layout>
