@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,14 +37,17 @@ Route::get('/admin/users-data', function () {
     return response()->json([
         'data' => User::select('id', 'name', 'email')->get()
     ]);
-    
+
 });
+        Route::get('/admin/itemlisting', function () {
+        return view('admin.itemlisting');
+    })->name('admin.itemlisting');
 
+Route::get('/admin/item-data', function () {
+    return response()->json([
+        'data' => Item::select('id', 'name')->get()
+    ]);
 
-Route::post('/admin/update-user/{id}', function ($id, Request $request) {
-    $user = User::findOrFail($id);
-    $user->update($request->only('name', 'email'));
-    return response()->json(['message' => 'User updated successfully.']);
 });
 
 });

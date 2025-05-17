@@ -9,11 +9,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <table id="userTable" class="stripe hover w-full text-sm text-left">
+                    <table id="itemTable" class="stripe hover w-full text-sm text-left">
                         <thead>
                             <tr>
                                 <th class="px-4 py-2">Name</th>
-                                <th class="px-4 py-2">Email</th>
                             </tr>
                         </thead>
                     </table>
@@ -25,11 +24,11 @@
 
     <script>
         $(document).ready(function () {
-            $('#userTable').DataTable({
+            $('#itemTable').DataTable({
                 processing: true,
                 serverSide: false,
                 ajax: {
-                    url: '/admin/users-data',
+                    url: '/admin/item-data',
                     error: function (xhr, error, thrown) {
                         console.log("AJAX Error: ", xhr.responseText);
                         alert("Failed to load user data. Check console for details.");
@@ -37,7 +36,6 @@
                 },
                 columns: [
                     { data: 'name', name: 'name' },
-                    { data: 'email', name: 'email' }
                 ],
                 language: {
                     search: "Search:",
