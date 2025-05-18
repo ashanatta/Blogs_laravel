@@ -4,7 +4,6 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -14,6 +13,9 @@
                             <tr>
                                 <th>#ID</th>
                                 <th>Name</th>
+                                <th>email</th>
+                                <th>desc</th>
+                                <th>age</th>
                             </tr>
                         </thead>
                     </table>
@@ -22,7 +24,6 @@
         </div>
     </div>
 
-   
 <script>
 $('#itemTable').DataTable({
     processing: true,
@@ -30,6 +31,9 @@ $('#itemTable').DataTable({
     ajax: '{{ route("admin.items.data") }}',
     columns: [
         { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+        { data: 'name', name: 'name', orderable: true, },
+        { data: 'name', name: 'name', orderable: true, },
+        { data: 'name', name: 'name', orderable: true, },
         { data: 'name', name: 'name', orderable: true, }
     ],
     dom: 'lfrtip',
@@ -38,7 +42,7 @@ $('#itemTable').DataTable({
         search: 'Search:',
     },
     classes: {
-        sLength: 'form-select block w-full mt-1', // for dropdown
+        sLength: 'form-select block w-full mt-1', 
     }
 });
 
