@@ -8,44 +8,68 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+
+                    {{-- 1) DataTable Markup --}}
                     <table id="itemTable" class="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead>
+                        <thead class="bg-gray-50">
                             <tr>
-                                <th>#ID</th>
-                                <th>Name</th>
-                                <th>email</th>
-                                <th>desc</th>
-                                <th>age</th>
+                                <th class="px-4 py-2 text-left font-medium text-gray-700">#</th>
+                                <th class="px-4 py-2 text-left font-medium text-gray-700">Name</th>
+                               
                             </tr>
                         </thead>
+                        <tbody>
+                            {{-- DataTables will inject rows here --}}
+                        </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
     </div>
 
-<script>
-$('#itemTable').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: '{{ route("admin.items.data") }}',
-    columns: [
-        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-        { data: 'name', name: 'name', orderable: true, },
-        { data: 'name', name: 'name', orderable: true, },
-        { data: 'name', name: 'name', orderable: true, },
-        { data: 'name', name: 'name', orderable: true, }
-    ],
-    dom: 'lfrtip',
-    language: {
-        lengthMenu: 'Show _MENU_ entries',
-        search: 'Search:',
-    },
-    classes: {
-        sLength: 'form-select block w-full mt-1', 
-    }
-});
+        <style>
+       
+        div.dataTables_length select {
+            
+            background-image: none; 
+        }
+        
+        </style>
 
-</script>
-
+        <script>
+        $(document).ready(function () {
+            $('#itemTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route("admin.items.data") }}',
+                columns: [
+                    {
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false,
+                        className: 'px-4 py-2' 
+                    },
+                    {
+                        data: 'name',
+                        name: 'name',
+                        orderable: true,
+                        searchable: true,
+                        className: 'px-4 py-2'
+                    },
+                    
+                ],
+                order: [[1, 'asc']],     // sort by column “Name” initially
+                pageLength: 10,          // show 10 rows per page by default
+                lengthMenu: [10, 25, 50, 100], 
+                dom: 'lfrtip',           // length | filter | table | info | pagination
+                language: {
+                    lengthMenu: 'Show _MENU_ entries',
+                    search: 'Search:',
+                    processing: 'Loading…'
+                }
+            });
+        });
+        </script>
 </x-app-layout>
